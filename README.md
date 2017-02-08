@@ -8,7 +8,7 @@ $ virtualenv env
 $ source env/bin/activate
 $ pip install "django>=1.8.7,<1.9a0"
 $ django-admin.py startproject --template=https://github.com/cartologic/cartoview-project-template/archive/master.zip  project_name
-$ pip install -r requirements.txt
+$ pip install cartoview
 $ cd project_name
 $ bower install
 ```
