@@ -4,18 +4,28 @@ except:
     pass
 import os
 import cartoview
-PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-BASE_DIR = os.path.dirname(PROJECT_DIR)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 cartoview_settings_path = os.path.join(os.path.dirname(cartoview.__file__), 'settings.py')
 execfile(cartoview_settings_path)
-
-MEDIA_ROOT = os.path.join(BASE_DIR, "uploaded")
-MEDIA_URL = "/uploaded/"
-LOCAL_MEDIA_URL = "/uploaded/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATICFILES_DIRS += [os.path.join(PROJECT_DIR, "static"),]
 
 try:
     from local_settings import *
 except:
     pass
+
+
+SITEURL ='http://localhost:8000/'
+GEOSERVER_LOCATION =  'http://localhost:8080/geoserver/'
+GEOSERVER_PUBLIC_LOCATION ='http://localhost:8080/geoserver/'
+OGC_SERVER['default']['LOCATION'] = GEOSERVER_LOCATION
+OGC_SERVER['default']['PUBLIC_LOCATION'] = GEOSERVER_PUBLIC_LOCATION
+OGC_SERVER['default']['LOG_FILE'] = os.path.join(BASE_DIR, "geoserver.log")
+if 'datastore' in DATABASES:
+  OGC_SERVER['default']['DATASTORE'] = 'datastore'
+
+MIDDLEWARE_CLASSES += ( "django.middleware.gzip.GZipMiddleware",)
+
+if 'geonode.geoserver' in INSTALLED_APPS and "LOCAL_GEOSERVER" in locals() and LOCAL_GEOSERVER in MAP_BASELAYERS:
+       LOCAL_GEOSERVER["source"]["url"] = OGC_SERVER['default']['PUBLIC_LOCATION'] + "wms"
+
+ALLOWED_HOSTS =['*']
