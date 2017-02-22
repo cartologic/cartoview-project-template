@@ -13,7 +13,7 @@ services:
   cartoview:
     command: bash -c "pwd ; python cartoview_project/manage.py makemigrations app_manager ; python cartoview_project/manage.py migrate people ; python cartoview_project/manage.py migrate && python cartoview_project/manage.py loaddata sample_admin.json && python cartoview_project/manage.py loaddata cartoview_project/json/default_oauth_apps.json && uwsgi --ini cartoview_project/uwsgi.ini "
 #    command: bash -c "python cartoview_project/manage.py makemigrations app_manager ; python cartoview_project/manage.py migrate people ; python cartoview_project/manage.py migrate ; python cartoview_project/manage.py loaddata sample_admin.json && python cartoview_project/manage.py loaddata cartoview_project/json/default_oauth_apps.json && python cartoview_project/manage.py runserver 0.0.0.0:8000"
-    image: test_1
+    image: cartoview/cartoview:latest
     ports:
       - "8000:8000"
     depends_on:
