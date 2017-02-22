@@ -11,7 +11,7 @@ services:
     volumes:
       - "./pgdata:/var/lib/postgresql/data"
   cartoview:
-    command: bash -c "uwsgi --ini uwsgi.ini "
+    command: bash -c "while ! nc -w 1 -z db 5432; do sleep 0.1; done; uwsgi --ini uwsgi.ini "
     image: cartoview/cartoview:latest
     ports:
       - "8000:8000"
