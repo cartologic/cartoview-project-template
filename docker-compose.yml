@@ -2,17 +2,16 @@ version: '2'
 
 services:
   postgis:
-    image: mdillon/postgis
+    image: cartoview/cartoview-postgis:latest
     restart: always
-    environment:
-      POSTGRES_PASSWORD: cartologic
+    env_file:
+      - ./postgis.env
     ports:
       - "5432:5432"
     volumes:
       - "./pgdata:/var/lib/postgresql/data"
   cartoview:
-    command: bash -c "pwd ; python manage.py makemigrations app_manager ; python manage.py migrate people ; python manage.py migrate && python manage.py loaddata sample_admin.json && python manage.py loaddata json/default_oauth_apps.json && uwsgi --ini uwsgi.ini "
-#    command: bash -c "python cartoview_project/manage.py makemigrations app_manager ; python manage.py migrate people ; python manage.py migrate ; python manage.py loaddata sample_admin.json && python manage.py loaddata json/default_oauth_apps.json && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "uwsgi --ini uwsgi.ini "
     image: cartoview/cartoview:latest
     ports:
       - "8000:8000"
