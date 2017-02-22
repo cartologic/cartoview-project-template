@@ -1,0 +1,17 @@
+<layer>
+  <name>historic_pnt</name>
+  <id>LayerInfoImpl--3ad5a990:15a65dba1ba:-7ff3</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl--3ad5a990:15a65dba1ba:-7ff2</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl--3ad5a990:15a65dba1ba:-7ff4</id>
+  </resource>
+  <queryable>true</queryable>
+  <opaque>false</opaque>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+</layer>
