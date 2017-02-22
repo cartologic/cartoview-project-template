@@ -11,8 +11,8 @@ services:
     volumes:
       - "./pgdata:/var/lib/postgresql/data"
   cartoview:
-    command: bash -c "pwd ; python cartoview_project/manage.py makemigrations app_manager ; python cartoview_project/manage.py migrate people ; python cartoview_project/manage.py migrate && python cartoview_project/manage.py loaddata sample_admin.json && python cartoview_project/manage.py loaddata cartoview_project/json/default_oauth_apps.json && uwsgi --ini cartoview_project/uwsgi.ini "
-#    command: bash -c "python cartoview_project/manage.py makemigrations app_manager ; python cartoview_project/manage.py migrate people ; python cartoview_project/manage.py migrate ; python cartoview_project/manage.py loaddata sample_admin.json && python cartoview_project/manage.py loaddata cartoview_project/json/default_oauth_apps.json && python cartoview_project/manage.py runserver 0.0.0.0:8000"
+    command: bash -c "pwd ; python manage.py makemigrations app_manager ; python manage.py migrate people ; python manage.py migrate && python manage.py loaddata sample_admin.json && python manage.py loaddata json/default_oauth_apps.json && uwsgi --ini uwsgi.ini "
+#    command: bash -c "python cartoview_project/manage.py makemigrations app_manager ; python manage.py migrate people ; python manage.py migrate ; python manage.py loaddata sample_admin.json && python manage.py loaddata json/default_oauth_apps.json && python manage.py runserver 0.0.0.0:8000"
     image: cartoview/cartoview:latest
     ports:
       - "8000:8000"
@@ -20,8 +20,8 @@ services:
       - postgis
     env_file:
       - ./django.env
-#    volumes:
-#      - "./cartoview_project:/code/cartoview_project"
+    volumes:
+      - "./:/code/"
   geoserver:
     image: geonode/geoserver:2.9.x-oauth2
     volumes:
