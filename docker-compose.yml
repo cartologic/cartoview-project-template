@@ -9,7 +9,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - "./pgdata:/var/lib/postgresql/data"
+      - "./pgdata:/var/lib/postgresql"
   cartoview:
     command: bash -c "while ! nc -w 1 -z postgis 5432; do sleep 0.1; done; uwsgi --ini uwsgi.ini "
     image: cartoview/cartoview:latest
