@@ -1,0 +1,37 @@
+version: '2'
+
+services:
+  postgis:
+    image: mdillon/postgis
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: cartologic
+    ports:
+      - "5432:5432"
+    volumes:
+      - "./pgdata:/var/lib/postgresql/data"
+  cartoview:
+    command: bash -c "pwd ; python cartoview_project/manage.py makemigrations app_manager ; python cartoview_project/manage.py migrate people ; python cartoview_project/manage.py migrate && python cartoview_project/manage.py loaddata sample_admin.json && python cartoview_project/manage.py loaddata cartoview_project/json/default_oauth_apps.json && uwsgi --ini cartoview_project/uwsgi.ini "
+#    command: bash -c "python cartoview_project/manage.py makemigrations app_manager ; python cartoview_project/manage.py migrate people ; python cartoview_project/manage.py migrate ; python cartoview_project/manage.py loaddata sample_admin.json && python cartoview_project/manage.py loaddata cartoview_project/json/default_oauth_apps.json && python cartoview_project/manage.py runserver 0.0.0.0:8000"
+    image: test_1
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgis
+    env_file:
+      - ./django.env
+#    volumes:
+#      - "./cartoview_project:/code/cartoview_project"
+  geoserver:
+    image: geonode/geoserver:2.9.x-oauth2
+    volumes:
+      - "./geoserver/data:/geoserver_data/data"
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    depends_on:
+      - cartoview
+      - geoserver
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
