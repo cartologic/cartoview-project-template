@@ -13,10 +13,6 @@ try:
 except:
     pass
 
-
-SITEURL ='http://localhost:8000/'
-GEOSERVER_LOCATION =  'http://localhost:8080/geoserver/'
-GEOSERVER_PUBLIC_LOCATION ='http://localhost:8080/geoserver/'
 OGC_SERVER['default']['LOCATION'] = GEOSERVER_LOCATION
 OGC_SERVER['default']['PUBLIC_LOCATION'] = GEOSERVER_PUBLIC_LOCATION
 OGC_SERVER['default']['LOG_FILE'] = os.path.join(BASE_DIR, "geoserver.log")
