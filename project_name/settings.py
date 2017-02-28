@@ -4,10 +4,22 @@ except:
     pass
 import os
 import cartoview
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(PROJECT_DIR)
 cartoview_settings_path = os.path.join(os.path.dirname(cartoview.__file__), 'settings.py')
 execfile(cartoview_settings_path)
-
+#bower static files
+STATICFILES_DIRS += [os.path.join(PROJECT_DIR, "static"),]
+#django Media Section
+#uncomment the following if you want your files out of geonode folder
+#MEDIA_ROOT = os.path.join(BASE_DIR, "uploaded")
+#MEDIA_URL = "/uploaded/"
+#LOCAL_MEDIA_URL = "/uploaded/"
+#static section
+#STATIC_ROOT = os.path.join(BASE_DIR, "static")
+ALLOWED_HOSTS =['*']
 try:
     from local_settings import *
 except:
@@ -24,4 +36,4 @@ MIDDLEWARE_CLASSES += ( "django.middleware.gzip.GZipMiddleware",)
 if 'geonode.geoserver' in INSTALLED_APPS and "LOCAL_GEOSERVER" in locals() and LOCAL_GEOSERVER in MAP_BASELAYERS:
        LOCAL_GEOSERVER["source"]["url"] = OGC_SERVER['default']['PUBLIC_LOCATION'] + "wms"
 
-ALLOWED_HOSTS =['*']
+
