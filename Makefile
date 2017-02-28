@@ -23,4 +23,10 @@ logs:
 	docker-compose logs --follow
 down:
 	docker-compose down
+bower:
+	docker-compose exec cartoview bower install --allow-root
 reset: down up wait sync
+
+collect_static: up
+        docker-compose exec cartoview python manage.py collectstatic --noinput
+all: up sync prepare_manager migrate_people migrate bower collect_static
