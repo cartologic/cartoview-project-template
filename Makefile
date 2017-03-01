@@ -29,4 +29,6 @@ reset: down up wait sync
 
 collect_static: up
         docker-compose exec cartoview python manage.py collectstatic --noinput
-all: up sync prepare_manager migrate_people migrate bower collect_static
+run: up wait prepare_manager
+
+static_db: up sync wait bower collect_static
