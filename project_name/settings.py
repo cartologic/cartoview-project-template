@@ -36,4 +36,37 @@ MIDDLEWARE_CLASSES += ( "django.middleware.gzip.GZipMiddleware",)
 if 'geonode.geoserver' in INSTALLED_APPS and "LOCAL_GEOSERVER" in locals() and LOCAL_GEOSERVER in MAP_BASELAYERS:
        LOCAL_GEOSERVER["source"]["url"] = OGC_SERVER['default']['PUBLIC_LOCATION'] + "wms"
 
+#un comment the following to enable osgeo_importer
+#DATABASES['datastore']= {
+#        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#        'NAME': 'cartoview_datastore',
+#        'USER' : 'cartologic',
+#        'PASSWORD' : 'root',
+#        'HOST' : 'postgis',
+#        'PORT' : '5432',
+#}
+#### osgeo_importer settings
+#OSGEO_DATASTORE = 'datastore'
+#OSGEO_IMPORTER_GEONODE_ENABLED = True
+#OSGEO_IMPORTER_VALID_EXTENSIONS = [
+#    'shp', 'shx', 'prj', 'dbf', 'kml', 'geojson', 'json', 'tif', 'tiff',
+#    'gpkg', 'csv', 'zip', 'xml', 'sld'
+#]
+#IMPORT_HANDLERS = [
+    # If GeoServer handlers are enabled, you must have an instance of geoserver running.
+    # Warning: the order of the handlers here matters.
+#    'osgeo_importer.handlers.FieldConverterHandler',
+#    'osgeo_importer.handlers.geoserver.GeoserverPublishHandler',
+#    'osgeo_importer.handlers.geoserver.GeoserverPublishCoverageHandler',
+#    'osgeo_importer.handlers.geoserver.GeoServerTimeHandler',
+#    'osgeo_importer.handlers.geoserver.GeoWebCacheHandler',
+#    'osgeo_importer.handlers.geoserver.GeoServerBoundsHandler',
+#    'osgeo_importer.handlers.geoserver.GenericSLDHandler',
+#    'osgeo_importer.handlers.geonode.GeoNodePublishHandler',
+#     'osgeo_importer.handlers.mapproxy.publish_handler.MapProxyGPKGTilePublishHandler',
+#    'osgeo_importer.handlers.geoserver.GeoServerStyleHandler',
+#    'osgeo_importer.handlers.geonode.GeoNodeMetadataHandler'
+#]
+
+#PROJECTION_DIRECTORY = os.path.join(PROJECT_ROOT, "data")
 
