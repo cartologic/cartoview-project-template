@@ -36,7 +36,14 @@ MIDDLEWARE_CLASSES += ( "django.middleware.gzip.GZipMiddleware",)
 if 'geonode.geoserver' in INSTALLED_APPS and "LOCAL_GEOSERVER" in locals() and LOCAL_GEOSERVER in MAP_BASELAYERS:
        LOCAL_GEOSERVER["source"]["url"] = OGC_SERVER['default']['PUBLIC_LOCATION'] + "wms"
 
-#un comment the following to enable osgeo_importer
+
+#uncomment the following to enable geonode client
+#INSTALLED_APPS += ('geonode-client',)
+#LAYER_PREVIEW_LIBRARY="react"
+
+
+#uncomment the following to enable osgeo_importer
+#INSTALLED_APPS += ('osgeo_importer',)
 #DATABASES['datastore']= {
 #        'ENGINE': 'django.contrib.gis.db.backends.postgis',
 #        'NAME': 'cartoview_datastore',

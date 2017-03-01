@@ -18,3 +18,5 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 ]
+#from osgeo_importer.urls import urlpatterns as importer_urlpatterns
+#urlpatterns += importer_urlpatterns
