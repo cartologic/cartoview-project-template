@@ -8,6 +8,7 @@ sync: up
 	docker-compose exec cartoview python manage.py loaddata sample_admin.json
 	docker-compose exec cartoview python manage.py loaddata json/default_oauth_apps.json
 	docker-compose exec cartoview python manage.py loaddata app_stores.json
+        docker-compose exec cartoview python manage.py loaddata initial_data.json
 
 
 prepare_manager: up
