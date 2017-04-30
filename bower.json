@@ -29,6 +29,7 @@
     "angular-bootstrap": "^2.4.0",
     "angular-drag-and-drop-lists": "^2.1.0",
     "ng-image-appear": "^1.11.3",
-    "lf-ng-md-file-input": "^1.5.1"
+    "lf-ng-md-file-input": "^1.5.1",
+    "angular-img-fallback": "^0.2.0"
   }
 }
