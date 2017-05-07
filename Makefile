@@ -33,3 +33,9 @@ collect_static: up
 run: up wait prepare_manager
 
 static_db: up sync wait bower collect_static
+
+update:
+	docker-compose exec cartoview pip install cartoview -U
+	docker-compose restart cartoview
+new_app: collect_static 
+        docker-compose restart cartoview
