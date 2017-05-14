@@ -11,7 +11,7 @@ services:
     volumes:
       - "./pgdata:/var/lib/postgresql"
   cartoview:
-    command: bash -c "uwsgi --ini uwsgi.ini "
+    command: bash -c "python server.py"
     image: cartoview/cartoview-docker:latest
     ports:
       - "8000:8000"
