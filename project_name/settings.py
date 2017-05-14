@@ -14,11 +14,11 @@ execfile(cartoview_settings_path)
 STATICFILES_DIRS += [os.path.join(PROJECT_DIR, "static"),]
 #django Media Section
 #uncomment the following if you want your files out of geonode folder
-#MEDIA_ROOT = os.path.join(BASE_DIR, "uploaded")
-#MEDIA_URL = "/uploaded/"
-#LOCAL_MEDIA_URL = "/uploaded/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploaded")
+MEDIA_URL = "/uploaded/"
+LOCAL_MEDIA_URL = "/uploaded/"
 #static section
-#STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 ALLOWED_HOSTS =['*']
 try:
     from local_settings import *
