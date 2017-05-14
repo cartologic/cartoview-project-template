@@ -1,4 +1,5 @@
 # Import CherryPy
+from {{project_name}}.wsgi import application
 import cherrypy
 if __name__ == '__main__':
     # Mount the application
