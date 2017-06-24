@@ -22,6 +22,8 @@ wait:
 	sleep 5
 logs:
 	docker-compose logs --follow
+logs_tail:
+	docker-compose logs --follow --tail 40
 down:
 	docker-compose down
 bower:
@@ -35,7 +37,7 @@ run: up wait prepare_manager
 static_db: up sync wait bower collect_static
 
 update:
-	docker-compose exec cartoview pip install cartoview -U
+	docker-compose exec cartoview pip install cartoview --no-cache-dir -U
 	docker-compose restart cartoview
 new_app: collect_static
 	docker-compose restart cartoview
