@@ -12,6 +12,7 @@ services:
       - "./pgdata:/var/lib/postgresql"
   cartoview:
     command: bash -c "python server.py"
+    restart: always
     image: cartoview/cartoview-docker:latest
     ports:
       - "8000:8000"
@@ -23,10 +24,12 @@ services:
       - "./:/code/"
   geoserver:
     image: geonode/geoserver:2.9.x-oauth2
+    restart: always
     volumes:
       - "./geoserver/data:/geoserver_data/data"
   nginx:
     image: nginx:alpine
+    restart: always
     ports:
       - "80:80"
     depends_on:
