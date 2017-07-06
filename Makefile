@@ -14,8 +14,8 @@ sync: up
 prepare_manager: up
         #make migration for app_manager
 	docker-compose exec cartoview python manage.py makemigrations app_manager
-migrate_people: up
-	docker-compose exec cartoview python manage.py migrate people
+migrate_account: up
+	docker-compose exec cartoview python manage.py migrate account
 migrate:
 	docker-compose exec cartoview python manage.py migrate --noinput
 wait:
@@ -32,7 +32,7 @@ reset: down up wait sync
 
 collect_static: up
 	docker-compose exec cartoview python manage.py collectstatic --noinput
-run: up wait prepare_manager
+run: up wait prepare_manager migrate_account bower collect_static
 
 static_db: up sync wait bower collect_static
 
