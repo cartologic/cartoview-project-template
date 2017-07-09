@@ -24,10 +24,9 @@ try:
     from local_settings import *
 except:
     pass
-
-OGC_SERVER['default']['LOCATION'] = GEOSERVER_LOCATION
-OGC_SERVER['default']['PUBLIC_LOCATION'] = GEOSERVER_PUBLIC_LOCATION
-OGC_SERVER['default']['LOG_FILE'] = os.path.join(BASE_DIR, "geoserver.log")
+#OGC_SERVER['default']['LOCATION'] = GEOSERVER_LOCATION
+#OGC_SERVER['default']['PUBLIC_LOCATION'] = GEOSERVER_PUBLIC_LOCATION
+#OGC_SERVER['default']['LOG_FILE'] = os.path.join(BASE_DIR, "geoserver.log")
 if 'datastore' in DATABASES:
   OGC_SERVER['default']['DATASTORE'] = 'datastore'
 
@@ -76,4 +75,3 @@ if 'geonode.geoserver' in INSTALLED_APPS and "LOCAL_GEOSERVER" in locals() and L
 #]
 
 #PROJECTION_DIRECTORY = os.path.join(PROJECT_ROOT, "data")
-
