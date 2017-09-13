@@ -13,7 +13,7 @@ services:
   cartoview:
     command: bash -c "python server.py"
     restart: always
-    image: cartoview/cartoview-docker:latest
+    image: cartoview/cartoview:latest
     ports:
       - "8000:8000"
     depends_on:

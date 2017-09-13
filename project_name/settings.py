@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 try:
     from pre_settings import *
 except:
