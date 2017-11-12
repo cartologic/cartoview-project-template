@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 
 services:
   postgis:
@@ -8,6 +8,14 @@ services:
       - ./postgis.env
     volumes:
       - "./pgdata:/var/lib/postgresql"
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    networks:
+      internal:
+      cartoview:
+        ipv4_address: 10.5.0.2
   geoserver:
     image: geonode/geoserver:2.9.x-oauth2
     restart: always
@@ -15,12 +23,18 @@ services:
       - postgis
     volumes:
       - "./geoserver/data:/geoserver_data/data"
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    networks:
+      internal:
+      cartoview:
+        ipv4_address: 10.5.0.3
   cartoview:
     command: bash -c "python server.py"
     restart: always
     image: cartoview/cartoview:latest
-    ports:
-      - "8000:8000"
     depends_on:
       - postgis
       - geoserver
@@ -28,6 +42,14 @@ services:
       - ./django.env
     volumes:
       - "./:/code/"
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000"
+    networks:
+      internal:
+      cartoview:
+        ipv4_address: 10.5.0.4
   nginx:
     image: nginx:alpine
     restart: always
@@ -35,3 +57,15 @@ services:
       - "80:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      internal:
+      cartoview:
+        ipv4_address: 10.5.0.5
+networks:
+  internal:
+  cartoview:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/16
+         gateway: 10.5.0.1
