@@ -23,7 +23,15 @@ wait:
 logs:
 	docker-compose logs --follow
 logs_tail:
-	docker-compose logs --follow --tail 40
+	docker-compose logs --follow --tail 100
+logs_tail_cartoview:
+	docker-compose logs --follow --tail 100 cartoview
+logs_tail_geoserver:
+	docker-compose logs --follow --tail 100 geoserver
+exec:
+    echo "Enter Command to execute" \
+	read command; \
+	docker-compose exec cartoview $$root_path
 down:
 	docker-compose down
 bower:
@@ -32,7 +40,7 @@ reset: down up wait sync
 
 collect_static: up
 	docker-compose exec cartoview python manage.py collectstatic --noinput
-run: up wait prepare_manager migrate_account sync bower collect_static
+run: up wait prepare_manager sync bower collect_static
 
 static_db: up sync wait bower collect_static
 
