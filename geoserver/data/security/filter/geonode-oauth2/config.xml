@@ -15,7 +15,7 @@
   <userAuthorizationUri>http://localhost:8000/o/authorize/</userAuthorizationUri>
   
   <!-- GeoServer Public URL -->
-  <redirectUri>http://localhost:8080/geoserver</redirectUri>
+  <redirectUri>http://localhost:8080/geoserver/index.html</redirectUri>
   
   <!-- GeoNode checkTokenEndpointUrl -->
   <checkTokenEndpointUrl>http://localhost:8000/api/o/v4/tokeninfo/</checkTokenEndpointUrl>
