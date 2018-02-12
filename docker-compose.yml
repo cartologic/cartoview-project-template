@@ -10,6 +10,16 @@ services:
       - "./pgdata:/var/lib/postgresql"
     ports:
       - "5432:5432"
+  elasticsearch:
+    image: elasticsearch:alpine
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+  rabbitmq:
+    image: rabbitmq
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
   geoserver:
     image: geonode/geoserver:2.9.x-oauth2
     restart: unless-stopped
