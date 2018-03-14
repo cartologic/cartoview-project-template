@@ -21,14 +21,15 @@ services:
     stdin_open: true
     tty: true
   geoserver:
-    image: geonode/geoserver:2.9.x-oauth2
-    restart: unless-stopped
+    image: cartoview/geoserver_docker:tomcat
     depends_on:
       - postgis
-    volumes:
-      - "./geoserver/data:/geoserver_data/data"
+    restart: always
     ports:
       - "8080:8080"
+    volumes:
+      - "./geoserver/data:/geoserver_data"
+    user: root
   cartoview:
     command: bash -c "python server.py"
     restart: unless-stopped
