@@ -28,10 +28,6 @@ logs_tail_cartoview:
 	docker-compose logs --follow --tail 100 cartoview
 logs_tail_geoserver:
 	docker-compose logs --follow --tail 100 geoserver
-exec:
-    echo "Enter Command to execute" \
-	read command; \
-	docker-compose exec cartoview $$root_path
 down:
 	docker-compose down
 bower:

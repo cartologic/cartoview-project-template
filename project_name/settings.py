@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 try:
-    from pre_settings import *
+    from .pre_settings import *
 except:
     pass
 import os
@@ -22,7 +22,7 @@ LOCAL_MEDIA_URL = "/uploaded/"
 # static section
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 try:
-    from local_settings import *
+    from .local_settings import *
 except:
     pass
 
