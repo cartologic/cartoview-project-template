@@ -19,7 +19,7 @@ migrate_account: up
 migrate:
 	docker-compose exec cartoview python manage.py migrate --noinput
 get_data:
-	mkdir geoserver && wget http://build.cartoview.net/data-2.12.x.zip -P ./test_geoserver && unzip ./geoserver/data-2.12.x.zip -d ./geoserver/
+	mkdir geoserver && wget http://build.cartoview.net/data-2.12.x.zip -P ./geoserver && unzip ./geoserver/data-2.12.x.zip -d ./geoserver/
 wait:
 	sleep 5
 logs:

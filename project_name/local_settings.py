@@ -25,7 +25,7 @@ from .settings import *
 
 # TIME_ZONE = 'Europe/Paris'
 
-SITEURL = "http://localhost/"
+#SITEURL = "http://localhost/"
 
 ALLOWED_HOSTS = ['*']
 
@@ -61,8 +61,7 @@ GEOSERVER_LOCATION = os.getenv(
 )
 
 GEOSERVER_PUBLIC_LOCATION = os.getenv(
-    #    'GEOSERVER_PUBLIC_LOCATION', '{}/geoserver/'.format(SITEURL)
-    'GEOSERVER_LOCATION', 'http://localhost:8080/geoserver/'
+    'GEOSERVER_PUBLIC_LOCATION', '{}/geoserver/'.format(SITEURL)
 )
 
 OGC_SERVER_DEFAULT_USER = os.getenv(
@@ -373,7 +372,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 GEOIP_PATH = "/usr/local/share/GeoIP"
 
-MONITORING_ENABLED = True
+MONITORING_ENABLED = False
 # add following lines to your local settings to enable monitoring
 if MONITORING_ENABLED:
     MIDDLEWARE_CLASSES += ('geonode.contrib.monitoring.middleware.MonitoringMiddleware',)
