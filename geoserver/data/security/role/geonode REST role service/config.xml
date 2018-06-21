@@ -4,7 +4,7 @@
   <className>org.geoserver.security.GeoServerRestRoleService</className>
   <adminGroup>ROLE_ADMIN</adminGroup>
   <groupAdminGroup>ROLE_ADMIN</groupAdminGroup>
-  <baseUrl>http://localhost:8000</baseUrl>
+  <baseUrl>http://10.5.0.4</baseUrl>
   <rolesRESTEndpoint>/api/roles</rolesRESTEndpoint>
   <adminRoleRESTEndpoint>/api/adminRole</adminRoleRESTEndpoint>
   <usersRESTEndpoint>/api/users</usersRESTEndpoint>

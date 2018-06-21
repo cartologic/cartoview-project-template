@@ -5,7 +5,7 @@
     <charset>UTF-8</charset>
     <numDecimals>8</numDecimals>
     <onlineResource>http://geoserver.org</onlineResource>
-    <proxyBaseUrl>http://localhost:8080/geoserver</proxyBaseUrl>
+    <proxyBaseUrl>http://10.5.0.4/geoserver</proxyBaseUrl>
     <verbose>false</verbose>
     <verboseExceptions>false</verboseExceptions>
     <metadata>
@@ -38,11 +38,10 @@
     <queueType>UNBOUNDED</queueType>
     <imageIOCacheThreshold>10240</imageIOCacheThreshold>
   </coverageAccess>
-  <updateSequence>0</updateSequence>
+  <updateSequence>1</updateSequence>
   <featureTypeCacheSize>0</featureTypeCacheSize>
   <globalServices>true</globalServices>
   <xmlPostRequestLogBufferSize>1024</xmlPostRequestLogBufferSize>
   <xmlExternalEntitiesEnabled>false</xmlExternalEntitiesEnabled>
   <webUIMode>DEFAULT</webUIMode>
-  <resourceErrorHandling>SKIP_MISCONFIGURED_LAYERS</resourceErrorHandling>
 </global>
