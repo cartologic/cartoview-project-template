@@ -33,19 +33,18 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'cartoview',
-        'USER': 'cartologic',
-        'PASSWORD': 'root',
-        'HOST': 'postgis',
+        'USER': 'cartoview',
+        'PASSWORD': 'cartoview',
+        'HOST': 'localhost',
         'PORT': '5432',
     },
     # vector datastore for uploads
     'datastore': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        # 'ENGINE': '', # Empty ENGINE name disables
-        'NAME': 'cartoview_datastore',
-        'USER': 'cartologic',
-        'PASSWORD': 'root',
-        'HOST': 'postgis',
+        'NAME': 'cartoview_data',
+        'USER': 'cartoview',
+        'PASSWORD': 'cartoview',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
