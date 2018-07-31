@@ -12,6 +12,8 @@ PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 APPS_DIR = os.path.abspath(os.path.join(BASE_DIR, "apps"))
 PENDING_APPS = os.path.join(APPS_DIR, "pendingOperation.yml")
+TEMPLATES[0]["DIRS"] = CARTOVIEW_TEMPLATE_DIRS + TEMPLATES[0]["DIRS"]
+
 INSTALLED_APPS += load_apps()
 STATICFILES_DIRS += [os.path.join(PROJECT_DIR, "static"), ]
 # django Media Section

@@ -2,7 +2,7 @@ version: '3'
 
 services:
   postgis:
-    image: cartoview/cartoview-postgis:latest
+    image: cartoview/cartoview-postgis:10.0-2.4
     restart: unless-stopped
     env_file:
       - ./postgis.env
@@ -12,8 +12,26 @@ services:
       - "pg-data:/var/lib/postgresql"
     networks:
       -cartoview-internal:
+  elasticsearch:
+    image: elasticsearch:alpine
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    expose:
+      - "9300"
+      - "9200"
+    networks:
+      -cartoview-internal:
+  rabbitmq:
+    image: rabbitmq:latest
+    restart: unless-stopped
+    expose:
+      - "5672"
+      - "15672"
+    networks:
+      -cartoview-internal:
   geoserver:
-    image: cartoview/geoserver_docker:tomcat
+    image: cartoview/geoserver_docker:2.12.x
     depends_on:
       - postgis
     restart: always
@@ -45,6 +63,22 @@ services:
       -cartoview-internal:
     expose:
       - "8000"
+  celery:
+    image: cartoview/cartoview:latest
+    command: bash -c "celery worker --app={{project_name}} --broker=amqp://guest:guest@rabbitmq:5672/ -B -E -l debug"
+    restart: unless-stopped
+    hostname: celery
+    depends_on:
+      - postgis
+      - rabbitmq
+      - geoserver
+    stdin_open: true
+    env_file:
+      - ./celery.env
+    volumes:
+      - "./:/code/"
+    networks:
+      -cartoview-internal:
   nginx:
     image: nginx:alpine
     restart: unless-stopped
