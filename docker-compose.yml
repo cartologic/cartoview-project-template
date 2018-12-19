@@ -51,7 +51,7 @@ services:
   cartoview:
     container_name: cartoview-{{project_name}}
     image: cartoview/cartoview:hisham-dev
-    command: bash -c "python manage.py cherry_server"
+    command: bash -c "python server.py"
     restart: unless-stopped
     hostname: cartoview
     depends_on:
