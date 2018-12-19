@@ -29,7 +29,7 @@ services:
     #   - "15672"
   data-dir-conf:
     container_name: data-dir-conf-{{project_name}}
-    image: geonode/geoserver_data:latest
+    image: geonode/geoserver_data:2.14.x
     restart: on-failure
     container_name: gsconf4cartoview
     command: /bin/true
@@ -37,7 +37,7 @@ services:
       - geoserver-data-dir-{{project_name}}:/geoserver_data/data
   geoserver:
     container_name: geoserver-{{project_name}}
-    image: cartoview/geoserver_docker:2.12.x
+    image: cartoview/geoserver_docker:2.14.x
     depends_on:
       - postgis
       - data-dir-conf
