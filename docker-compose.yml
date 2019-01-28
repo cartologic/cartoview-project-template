@@ -13,7 +13,7 @@ services:
       - "pg-data-{{project_name}}:/var/lib/postgresql"
   elasticsearch:
     container_name: elasticsearch-{{project_name}}
-    image: elasticsearch:5.6.12-alpine
+    image: elasticsearch:2.4.1
     restart: unless-stopped
     stdin_open: true
     tty: true
