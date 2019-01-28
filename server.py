@@ -12,6 +12,8 @@ if __name__ == '__main__':
     server.socket_host = "0.0.0.0"
     server.socket_port = 8000
     server.thread_pool = 30
+    server.max_request_body_size = 0
+    server.socket_timeout = 10000000
     # For SSL Support server.ssl_module = 'pyopenssl' server.ssl_certificate =
     # 'ssl/certificate.crt' server.ssl_private_key = 'ssl/private.key'
     # server.ssl_certificate_chain = 'ssl/bundle.crt' Subscribe this server
