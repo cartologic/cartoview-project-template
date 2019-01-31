@@ -25,8 +25,8 @@ from distutils.util import strtobool
 import dj_database_url
 from .settings import *
 SITEURL = os.getenv("SITEURL", "http://localhost/")
-DATABASE_URL = os.getenv(
-    'DATABASE_URL', 'sqlite:////{}/database.sqlite'.format(BASE_DIR))
+DATABASE_URL = os.getenv('DATABASE_URL',
+                         'sqlite:////{}/database.sqlite'.format(BASE_DIR))
 DATASTORE_DATABASE_URL = os.getenv('DATASTORE_DATABASE_URL', None)
 if DATABASE_URL:
     DATABASES['default'] = dj_database_url.parse(
@@ -37,17 +37,13 @@ if DATASTORE_DATABASE_URL:
 GEOSERVER_LOCATION = os.getenv('GEOSERVER_LOCATION',
                                'http://localhost:8080/geoserver/')
 
-GEOSERVER_PUBLIC_LOCATION = os.getenv(
-    'GEOSERVER_PUBLIC_LOCATION',
-    'http://localhost/geoserver/')
+GEOSERVER_PUBLIC_LOCATION = os.getenv('GEOSERVER_PUBLIC_LOCATION',
+                                      'http://localhost/geoserver/')
 
-OGC_SERVER_DEFAULT_USER = os.getenv(
-    'GEOSERVER_ADMIN_USER', 'admin'
-)
+OGC_SERVER_DEFAULT_USER = os.getenv('GEOSERVER_ADMIN_USER', 'admin')
 
-OGC_SERVER_DEFAULT_PASSWORD = os.getenv(
-    'GEOSERVER_ADMIN_PASSWORD', 'geoserver'
-)
+OGC_SERVER_DEFAULT_PASSWORD = os.getenv('GEOSERVER_ADMIN_PASSWORD',
+                                        'geoserver')
 
 GEOFENCE_SECURITY_ENABLED = True
 
@@ -55,40 +51,58 @@ GEOFENCE_SECURITY_ENABLED = True
 # OGC (WMS/WFS/WCS) Server Settings
 OGC_SERVER = {
     'default': {
-        'BACKEND': 'geonode.geoserver',
-        'LOCATION': GEOSERVER_LOCATION,
-        'LOGIN_ENDPOINT': 'j_spring_oauth2_geonode_login',
-        'LOGOUT_ENDPOINT': 'j_spring_oauth2_geonode_logout',
+        'BACKEND':
+        'geonode.geoserver',
+        'LOCATION':
+        GEOSERVER_LOCATION,
+        'LOGIN_ENDPOINT':
+        'j_spring_oauth2_geonode_login',
+        'LOGOUT_ENDPOINT':
+        'j_spring_oauth2_geonode_logout',
         # PUBLIC_LOCATION needs to be kept like this because in dev mode
         # the proxy won't work and the integration tests will fail
         # the entire block has to be overridden in the local_settings
-        'PUBLIC_LOCATION': GEOSERVER_PUBLIC_LOCATION,
-        'USER': OGC_SERVER_DEFAULT_USER,
-        'PASSWORD': OGC_SERVER_DEFAULT_PASSWORD,
-        'MAPFISH_PRINT_ENABLED': True,
-        'PRINT_NG_ENABLED': True,
-        'GEONODE_SECURITY_ENABLED': True,
-        'GEOFENCE_SECURITY_ENABLED': GEOFENCE_SECURITY_ENABLED,
-        'GEOFENCE_URL': os.getenv('GEOFENCE_URL', 'internal:/'),
-        'GEOGIG_ENABLED': False,
-        'WMST_ENABLED': False,
-        'BACKEND_WRITE_ENABLED': True,
-        'WPS_ENABLED': False,
-        'LOG_FILE': '%s/geoserver/data/logs/geoserver.log'
-        % os.path.abspath(os.path.join(BASE_DIR, os.pardir)),
+        'PUBLIC_LOCATION':
+        GEOSERVER_PUBLIC_LOCATION,
+        'USER':
+        OGC_SERVER_DEFAULT_USER,
+        'PASSWORD':
+        OGC_SERVER_DEFAULT_PASSWORD,
+        'MAPFISH_PRINT_ENABLED':
+        True,
+        'PRINT_NG_ENABLED':
+        True,
+        'GEONODE_SECURITY_ENABLED':
+        True,
+        'GEOFENCE_SECURITY_ENABLED':
+        GEOFENCE_SECURITY_ENABLED,
+        'GEOFENCE_URL':
+        os.getenv('GEOFENCE_URL', 'internal:/'),
+        'GEOGIG_ENABLED':
+        False,
+        'WMST_ENABLED':
+        False,
+        'BACKEND_WRITE_ENABLED':
+        True,
+        'WPS_ENABLED':
+        False,
+        'LOG_FILE':
+        '%s/geoserver/data/logs/geoserver.log' % os.path.abspath(
+            os.path.join(BASE_DIR, os.pardir)),
         # Set to name of database in DATABASES dictionary to enable
         # 'datastore',
-        'DATASTORE': os.getenv('DEFAULT_BACKEND_DATASTORE', ''),
-        'PG_GEOGIG': False,
+        'DATASTORE':
+        os.getenv('DEFAULT_BACKEND_DATASTORE', ''),
+        'PG_GEOGIG':
+        False,
         # 'CACHE': ".cache"  # local cache file to for HTTP requests
         # number of seconds to allow for HTTP requests
-        'TIMEOUT': int(os.getenv('OGC_REQUEST_TIMEOUT', '10'))
+        'TIMEOUT':
+        int(os.getenv('OGC_REQUEST_TIMEOUT', '10'))
     }
 }
 
-
 # GeoNode javascript client configuration
-
 
 DEFAULT_MAP_CRS = "EPSG:3857"
 
@@ -107,8 +121,7 @@ ALT_OSM_BASEMAPS = os.environ.get('ALT_OSM_BASEMAPS', True)
 CARTODB_BASEMAPS = os.environ.get('CARTODB_BASEMAPS', True)
 STAMEN_BASEMAPS = os.environ.get('STAMEN_BASEMAPS', True)
 THUNDERFOREST_BASEMAPS = os.environ.get('THUNDERFOREST_BASEMAPS', True)
-MAPBOX_ACCESS_TOKEN = os.environ.get(
-    'MAPBOX_ACCESS_TOKEN', '<MapBox_Key>')
+MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN', '<MapBox_Key>')
 BING_API_KEY = os.environ.get('BING_API_KEY', '<BING_API_KEY>')
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '<GOOGLE_API_KEY>')
 
@@ -163,8 +176,9 @@ if 'geonode.geoserver' in INSTALLED_APPS:
 EMAIL_ENABLE = strtobool(os.getenv('EMAIL_ENABLE', 'False'))
 
 if EMAIL_ENABLE:
-    EMAIL_BACKEND = os.getenv('DJANGO_EMAIL_BACKEND',
-                              default='django.core.mail.backends.smtp.EmailBackend')
+    EMAIL_BACKEND = os.getenv(
+        'DJANGO_EMAIL_BACKEND',
+        default='django.core.mail.backends.smtp.EmailBackend')
     EMAIL_HOST = 'localhost'
     EMAIL_PORT = 25
     EMAIL_HOST_USER = ''
@@ -172,11 +186,13 @@ if EMAIL_ENABLE:
     EMAIL_USE_TLS = False
     DEFAULT_FROM_EMAIL = 'GeoNode <no-reply@geonode.org>'
 else:
-    EMAIL_BACKEND = os.getenv('DJANGO_EMAIL_BACKEND',
-                              default='django.core.mail.backends.console.EmailBackend')
+    EMAIL_BACKEND = os.getenv(
+        'DJANGO_EMAIL_BACKEND',
+        default='django.core.mail.backends.console.EmailBackend')
 
-#ssl settings
-USE_X_FORWARDED_HOST = True
-if SITEURL.startswith('https'):
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-AVATAR_GRAVATAR_SSL = True
+SSL_ENABLED = strtobool(os.getenv('SSL_ENABLED', 'False'))
+if SSL_ENABLED:
+    USE_X_FORWARDED_HOST = True
+    if SITEURL.startswith('https'):
+        SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    AVATAR_GRAVATAR_SSL = True
