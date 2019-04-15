@@ -14,5 +14,5 @@ ROOT_URLCONF = os.getenv("ROOT_URLCONF", "{{project_name}}.urls")
 APPS_DIR = os.path.abspath(os.path.join(BASE_DIR, "apps"))
 try:
     from .local_settings import *
-except:
+except ImportError:
     pass

@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+  postgis:
+    image: cartoview/cartoview-postgis:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASS: docker
+      ALLOW_IP_RANGE: 0.0.0.0/0
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U docker -h localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - "pg-data-{{project_name}}:/var/lib/postgresql"
+  rabbitmq:
+    image: rabbitmq:latest
+    restart: unless-stopped
+    healthcheck:
+      timeout: 5s
+      interval: 5s
+      retries: 5
+      test:
+        - "CMD"
+        - "rabbitmqctl"
+        - "status"
+  cartoview:
+    image: cartoview/cartoview2:latest
+    command: bash -c "gunicorn {{project_name}}.wsgi --workers=7"
+    restart: unless-stopped
+    hostname: cartoview
+    depends_on:
+      - postgis
+      - geoserver
+    healthcheck:
+      test: ["CMD-SHELL", "curl --silent --fail localhost:8000 || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+    env_file:
+      - ./docker.env
+    volumes:
+      - "./:/usr/src/cartoview_project"
+  celery:
+    image: cartoview/cartoview2:latest
+    command: bash -c "celery worker --app={{project_name}} --broker=amqp://guest:guest@rabbitmq:5672/ -B -E -l debug"
+    restart: unless-stopped
+    hostname: celery
+    depends_on:
+      - postgis
+      - geoserver
+      - rabbitmq
+    env_file:
+      - ./docker.env
+    volumes:
+      - "./:/usr/src/cartoview_project"
+volumes:
+  pg-data-{{project_name}}:
