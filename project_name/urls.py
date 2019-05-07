@@ -13,9 +13,8 @@ Including another URLconf
     1. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.urls import include, path, re_path
-
-urlpatterns = [
-    re_path(r'^',include('cartoview.urls'))
-]
+from cartoview.urls import urlpatterns as cartoview_urls
+urlpatterns = []
+urlpatterns += cartoview_urls
 #from osgeo_importer.urls import urlpatterns as importer_urlpatterns
 #urlpatterns += importer_urlpatterns
