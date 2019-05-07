@@ -27,7 +27,7 @@ services:
         - "rabbitmqctl"
         - "status"
   cartoview:
-    image: cartoview/cartoview2:latest
+    image: cartoview/cartoview:cartoview2
     command: bash -c "gunicorn {{project_name}}.wsgi --workers=7"
     restart: unless-stopped
     hostname: cartoview
@@ -44,8 +44,8 @@ services:
     volumes:
       - "./:/usr/src/cartoview_project"
   celery:
-    image: cartoview/cartoview2:latest
-    command: bash -c "celery worker --app={{project_name}} --broker=amqp://guest:guest@rabbitmq:5672/ -B -E -l debug"
+    image: cartoview/cartoview:cartoview2
+    command: bash -c "celery worker --app=cartoview.celery_app:app --broker=amqp://guest:guest@rabbitmq:5672/ -B -E -l debug"
     restart: unless-stopped
     hostname: celery
     depends_on:
