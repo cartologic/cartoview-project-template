@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 from cartoview.settings import *
-
+PROJECT_NAME = "{{project_name}}"
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
