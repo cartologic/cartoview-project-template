@@ -1,0 +1,125 @@
+version: '3'
+
+services:
+  postgis:
+    image: cartoview/cartoview-postgis:latest
+    container_name: postgis_{{project_name}}
+    restart: unless-stopped
+    env_file:
+      - ./env/postgis.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - "pg-data-{{project_name}}:/var/lib/postgresql"
+    networks:
+      -cartoview-internal:
+  elasticsearch:
+    image: elasticsearch:5.6.12-alpine
+    container_name: elasticsearch_{{project_name}}
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    ports:
+      - "9300:9300"
+      - "9200:9200"
+    networks:
+      -cartoview-internal:
+  rabbitmq:
+    image: rabbitmq:latest
+    container_name: rabbitmq_{{project_name}}
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      -cartoview-internal:
+  data-dir-conf:
+    image: geonode/geoserver_data:2.15.4
+    container_name: geoserver_data_dir_{{project_name}}
+    restart: on-failure
+    container_name: gsconf4cartoview
+    volumes:
+      - geoserver-dir-{{project_name}}:/geoserver_data/data
+  geoserver:
+    image: geonode/geoserver:2.15.4
+    container_name: geoserver_{{project_name}}
+    depends_on:
+      - postgis
+      - data-dir-conf
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - geoserver-dir:/geoserver_data/data
+    env_file:
+      - ./env/tomcat.env
+    networks:
+      -cartoview-external:
+        ipv4_address: 10.5.0.2
+      -cartoview-internal:
+  cartoview:
+    build: ./build/cartoview/
+    image: cartoview_{{project_name}}:latest
+    container_name: cartoview_{{project_name}}
+    command: bash -c "python server.py"
+    restart: unless-stopped
+    hostname: cartoview
+    depends_on:
+      - postgis
+      - geoserver
+    env_file: ./env/django.env
+    volumes:
+      - "./:/usr/src/carto_app"
+    ports:
+      - "8000:8000"
+    networks:
+      -cartoview-external:
+        ipv4_address: 10.5.0.3
+      -cartoview-internal:
+  carto_data_dir:
+    image: carto_data:latest
+    restart: on-failure
+    command: /bin/true
+    volumes:
+      - cartoview-data-{{project_name}}:/usr/src/carto_app
+  celery:
+    image: cartoview_{{project_name}}:latest
+    container_name: celery_{{project_name}}
+    command: bash -c "celery worker --app={{project_name}} --broker=amqp://guest:guest@rabbitmq:5672/ -B -E -l debug"
+    restart: unless-stopped
+    hostname: celery
+    depends_on:
+      - postgis
+      - rabbitmq
+      - geoserver
+    stdin_open: true
+    env_file:
+      - ./env/celery.env
+    volumes:
+      - "./:/usr/src/carto_app"
+    networks:
+      -cartoview-internal:
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_{{project_name}}
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      -cartoview-external:
+        ipv4_address: 10.5.0.4
+      -cartoview-internal:
+networks:
+    -cartoview-external:
+      driver: bridge
+      ipam:
+        config:
+          - subnet: 10.5.0.0/16
+    -cartoview-internal:
+       internal: true
+volumes:
+  geoserver-dir:
+  pg-data:
+  cartoview-data-{{project_name}}:
