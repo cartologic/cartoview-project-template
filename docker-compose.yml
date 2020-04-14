@@ -49,7 +49,7 @@ services:
     env_file:
       - ./env/tomcat.env
   cartoview:
-    build: ./build/cartoview/
+    build: ./docker/cartoview/
     image: cartoview_{{project_name}}:latest
     container_name: cartoview_{{project_name}}
     command: bash -c "python server.py"
