@@ -45,7 +45,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - geoserver-dir:/geoserver_data/data
+      - geoserver-dir-{{project_name}}:/geoserver_data/data
     env_file:
       - ./env/tomcat.env
   cartoview:
