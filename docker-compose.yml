@@ -81,7 +81,7 @@ services:
       - geoserver
     stdin_open: true
     env_file:
-      - ./env/celery.env
+      - ./env/django.env
     volumes:
       - "./:/usr/src/carto_app"
   nginx:
