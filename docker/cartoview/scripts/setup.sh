@@ -40,7 +40,7 @@ rm -rf cartoview
 
 # Installing extra python packages required for CartoView Apps:
 cd /cartoview_scripts
-pip install extra_req.txt
+pip install -r extra_req.txt
 
 # cleanup image
 rm -rf ~/.cache/pip
