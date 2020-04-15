@@ -31,7 +31,6 @@ services:
     image: geonode/geoserver_data:2.15.4
     container_name: geoserver_data_dir_{{project_name}}
     restart: on-failure
-    container_name: gsconf4cartoview
     command: /bin/true
     volumes:
       - geoserver-dir-{{project_name}}:/geoserver_data/data
