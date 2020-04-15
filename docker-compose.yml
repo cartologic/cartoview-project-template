@@ -63,12 +63,6 @@ services:
       - "./:/usr/src/carto_app"
     ports:
       - "8000:8000"
-  carto_data_dir:
-    image: carto_data:latest
-    restart: on-failure
-    command: /bin/true
-    volumes:
-      - cartoview-data-{{project_name}}:/usr/src/carto_app
   celery:
     image: cartoview_{{project_name}}:latest
     container_name: celery_{{project_name}}
@@ -95,4 +89,3 @@ services:
 volumes:
   geoserver-dir-{{project_name}}:
   pg-data-{{project_name}}:
-  cartoview-data-{{project_name}}:

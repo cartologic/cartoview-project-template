@@ -50,7 +50,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - geoserver-dir:/geoserver_data/data
+      - geoserver-dir-{{project_name}}:/geoserver_data/data
     env_file:
       - ./env/tomcat.env
     networks:
@@ -76,12 +76,6 @@ services:
       -cartoview-external:
         ipv4_address: 10.5.0.3
       -cartoview-internal:
-  carto_data_dir:
-    image: carto_data:latest
-    restart: on-failure
-    command: /bin/true
-    volumes:
-      - cartoview-data-{{project_name}}:/usr/src/carto_app
   celery:
     image: cartoview_{{project_name}}:latest
     container_name: celery_{{project_name}}
@@ -120,6 +114,5 @@ networks:
     -cartoview-internal:
        internal: true
 volumes:
-  geoserver-dir:
-  pg-data:
-  cartoview-data-{{project_name}}:
+  geoserver-dir-{{project_name}}:
+  pg-data-{{project_name}}:
