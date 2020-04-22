@@ -11,6 +11,8 @@ services:
       - "5432:5432"
     volumes:
       - "pg-data-{{project_name}}:/var/lib/postgresql"
+    networks:
+      -cartoview-internal:
   elasticsearch:
     image: elasticsearch:5.6.12-alpine
     container_name: elasticsearch_{{project_name}}
@@ -20,6 +22,8 @@ services:
     ports:
       - "9300:9300"
       - "9200:9200"
+    networks:
+      -cartoview-internal:
   rabbitmq:
     image: rabbitmq:latest
     container_name: rabbitmq_{{project_name}}
@@ -27,11 +31,13 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      -cartoview-internal:
   data-dir-conf:
     image: geonode/geoserver_data:2.15.4
     container_name: geoserver_data_dir_{{project_name}}
     restart: on-failure
-    command: /bin/true
+    container_name: gsconf4cartoview
     volumes:
       - geoserver-dir-{{project_name}}:/geoserver_data/data
   geoserver:
@@ -47,6 +53,10 @@ services:
       - geoserver-dir-{{project_name}}:/geoserver_data/data
     env_file:
       - ./env/tomcat.env
+    networks:
+      -cartoview-external:
+        ipv4_address: 10.5.0.2
+      -cartoview-internal:
   cartoview:
     build: ./docker/cartoview/
     image: cartoview_{{project_name}}:latest
@@ -62,6 +72,10 @@ services:
       - "./:/usr/src/carto_app"
     ports:
       - "8000:8000"
+    networks:
+      -cartoview-external:
+        ipv4_address: 10.5.0.3
+      -cartoview-internal:
   celery:
     image: cartoview_{{project_name}}:latest
     container_name: celery_{{project_name}}
@@ -77,6 +91,8 @@ services:
       - ./env/django.env
     volumes:
       - "./:/usr/src/carto_app"
+    networks:
+      -cartoview-internal:
   nginx:
     image: nginx:alpine
     container_name: nginx_{{project_name}}
@@ -85,6 +101,18 @@ services:
       - "80:80"
     volumes:
       - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      -cartoview-external:
+        ipv4_address: 10.5.0.4
+      -cartoview-internal:
+networks:
+    -cartoview-external:
+      driver: bridge
+      ipam:
+        config:
+          - subnet: 10.5.0.0/16
+    -cartoview-internal:
+       internal: true
 volumes:
   geoserver-dir-{{project_name}}:
   pg-data-{{project_name}}:

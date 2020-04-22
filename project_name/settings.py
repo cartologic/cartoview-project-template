@@ -14,8 +14,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 APPS_DIR = os.path.abspath(os.path.join(BASE_DIR, "apps"))
 try:
     from .local_settings import *
-except:
-    pass
+except Exception as e:
+    print('error while importing local settings: ', e)
 
 # cartoview setings
 TEMPLATES[0]["DIRS"] = CARTOVIEW_TEMPLATE_DIRS + TEMPLATES[0]["DIRS"]

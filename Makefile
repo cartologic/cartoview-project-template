@@ -3,13 +3,14 @@ up:
 	docker-compose up -d
 
 sync: up
-	# set up the database tables
 	docker-compose exec cartoview python manage.py migrate
 	docker-compose exec cartoview python manage.py loaddata sample_admin.json
 	docker-compose exec cartoview python manage.py loaddata default_oauth_apps.json
 	docker-compose exec cartoview python manage.py loaddata app_stores.json
 	docker-compose exec cartoview python manage.py loaddata initial_data.json
 
+backfill_api_keys:
+	docker-compose exec cartoview python manage.py backfill_api_keys
 
 prepare_manager: up
 	#make migration for app_manager
@@ -32,7 +33,7 @@ reset: down up wait sync
 
 collect_static: up
 	docker-compose exec cartoview python manage.py collectstatic --noinput
-run: up wait prepare_manager sync collect_static
+run: up wait prepare_manager sync collect_static backfill_api_keys
 
 static_db: up sync wait collect_static
 
