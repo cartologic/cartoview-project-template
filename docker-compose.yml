@@ -56,10 +56,12 @@ services:
     hostname: cartoview
     depends_on:
       - postgis
+      - data-dir-conf
       - geoserver
     env_file: ./env/django.env
     volumes:
       - "./:/usr/src/carto_app"
+      - geoserver-dir-{{project_name}}:/geoserver_data/data
     ports:
       - "8000:8000"
   celery:
