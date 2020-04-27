@@ -26,6 +26,11 @@ app_manager_settings = os.path.join(
 execfile(os.path.realpath(app_manager_settings))
 load_apps(APPS_DIR)
 INSTALLED_APPS += CARTOVIEW_APPS
+
+# adding current project to installed apps
+INSTALLED_APPS += (PROJECT_NAME,)
+
+# adding cartoview apps settings files 
 for settings_file in APPS_SETTINGS:
     try:
         execfile(settings_file)
