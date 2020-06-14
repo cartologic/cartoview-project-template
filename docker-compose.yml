@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   postgis:
@@ -87,6 +87,8 @@ services:
       - "80:80"
     volumes:
       - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./static/:/cartoview/static/
+      - ./uploaded/:/cartoview/uploaded/
 volumes:
   geoserver-dir-{{project_name}}:
   pg-data-{{project_name}}:

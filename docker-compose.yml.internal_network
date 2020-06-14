@@ -101,6 +101,8 @@ services:
       - "80:80"
     volumes:
       - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./static/:/cartoview/static/
+      - ./uploaded/:/cartoview/uploaded/
     networks:
       -cartoview-external:
         ipv4_address: 10.5.0.4
