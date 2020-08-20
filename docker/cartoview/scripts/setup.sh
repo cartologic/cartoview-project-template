@@ -32,7 +32,7 @@ pip install GDAL==2.3.2
 
 # install cartoview
 cd /tmp
-git clone https://github.com/cartologic/cartoview.git
+git clone https://github.com/cartologic/cartoview.git -b 1.10.x
 cd cartoview
 pip install .
 cd /tmp
