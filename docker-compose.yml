@@ -1,25 +1,16 @@
 version: '3'
 
 services:
-  postgis:
-    image: cartoview/cartoview-postgis:latest
-    container_name: postgis_{{project_name}}
+  db:
+    image: kartoza/postgis:11.5-2.5
+    container_name: db_{{project_name}}
     restart: unless-stopped
     env_file:
-      - ./env/postgis.env
+      - ./env/db.env
     ports:
       - "5432:5432"
     volumes:
       - "pg-data-{{project_name}}:/var/lib/postgresql"
-  elasticsearch:
-    image: elasticsearch:5.6.12-alpine
-    container_name: elasticsearch_{{project_name}}
-    restart: unless-stopped
-    stdin_open: true
-    tty: true
-    ports:
-      - "9300:9300"
-      - "9200:9200"
   rabbitmq:
     image: rabbitmq:latest
     container_name: rabbitmq_{{project_name}}
@@ -28,17 +19,17 @@ services:
       - "5672:5672"
       - "15672:15672"
   data-dir-conf:
-    image: geonode/geoserver_data:2.15.4
+    image: geonode/geoserver_data:2.16.2
     container_name: geoserver_data_dir_{{project_name}}
     restart: on-failure
     command: /bin/true
     volumes:
       - geoserver-dir-{{project_name}}:/geoserver_data/data
   geoserver:
-    image: geonode/geoserver:2.15.4
+    image: geonode/geoserver:2.16.2
     container_name: geoserver_{{project_name}}
     depends_on:
-      - postgis
+      - db
       - data-dir-conf
     restart: unless-stopped
     ports:
@@ -55,7 +46,7 @@ services:
     restart: unless-stopped
     hostname: cartoview
     depends_on:
-      - postgis
+      - db
       - data-dir-conf
       - geoserver
     env_file: ./env/django.env
@@ -71,7 +62,7 @@ services:
     restart: unless-stopped
     hostname: celery
     depends_on:
-      - postgis
+      - db
       - rabbitmq
       - geoserver
     stdin_open: true
