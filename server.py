@@ -17,6 +17,14 @@ if __name__ == '__main__':
     }
     cherrypy.tree.mount(None, settings.STATIC_URL, {'/': config})
 
+    config = {
+        'tools.staticdir.on': True,
+        'tools.staticdir.dir': settings.MEDIA_ROOT,
+        'tools.expires.on': True,
+        'tools.expires.secs': 86400
+    }
+    cherrypy.tree.mount(None, settings.MEDIA_URL, {'/': config})
+
     cherrypy.config.update({
         "server.socket_host": "0.0.0.0",
         "server.socket_port": 8000,
