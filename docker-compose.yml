@@ -55,8 +55,9 @@ services:
     env_file:
       - ./env/tomcat.env
   cartoview:
-    build: ./docker/cartoview/
-    image: cartoview_{{project_name}}:latest
+    # build: ./docker/cartoview/
+    # image: cartoview_{{project_name}}:latest
+    image: cartologic/cartoview:latest
     container_name: cartoview_{{project_name}}
     command: bash -c "python server.py"
     restart: unless-stopped
