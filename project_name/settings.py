@@ -35,4 +35,4 @@ for settings_file in APPS_SETTINGS:
     try:
         execfile(settings_file)
     except Exception as e:
-        print(e.message)
+        print(e)
