@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 import os
 from cartoview.settings import *
+# django project name
 PROJECT_NAME = "{{project_name}}"
+# web site human readable name
+SITE_NAME = os.getenv("SITE_NAME", PROJECT_NAME)
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
@@ -29,6 +32,15 @@ INSTALLED_APPS += CARTOVIEW_APPS
 
 # adding current project to installed apps
 INSTALLED_APPS += (PROJECT_NAME,)
+
+# using project templates if cartoview_cms is installed
+if "cartoview_cms" in INSTALLED_APPS:
+    currrent_templates_dirs = [os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        'templates'
+    )]
+    TEMPLATES[0]["DIRS"] = currrent_templates_dirs + TEMPLATES[0]["DIRS"]
+
 
 # adding cartoview apps settings files 
 for settings_file in APPS_SETTINGS:
