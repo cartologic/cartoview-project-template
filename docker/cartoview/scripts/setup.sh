@@ -42,8 +42,7 @@ C_INCLUDE_PATH=/usr/include/gdal
 gdal-config --version | cut -c 1-5 | xargs -I % pip install 'pygdal>=%.0,<=%.999'
 
 # install geoip-bin
-printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
-apt-get update && apt-get install -y geoip-bin
+apt-get install -y geoip-bin
 
 
 # install cartoview
