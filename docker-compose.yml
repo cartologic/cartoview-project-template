@@ -58,7 +58,7 @@ services:
   celery:
     image: cartoview_{{project_name}}:latest
     container_name: celery_{{project_name}}
-    command: bash -c "celery worker --app={{project_name}} --broker=amqp://guest:guest@rabbitmq:5672/ -B -E -l debug"
+    command: bash -c "celery -A {{project_name}}.celery:app worker -B -E --statedb=./worker.state -s ./celerybeat-schedule --loglevel=INFO --concurrency=10 -n worker1@%h -f /var/log/celery.log"
     restart: unless-stopped
     hostname: celery
     depends_on:
